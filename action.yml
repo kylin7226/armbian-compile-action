@@ -3,16 +3,8 @@ description: 'Armbian Linux build framework'
 inputs:
   board:
     required: true
-  distro:
-    required: true
   flavor:
     required: true
-  kernel_branch:
-    required: false
-    default: 'current'
-  artifacts:
-    required: false
-    default: 'false'
   release-id:
     required: false
   github-token:
@@ -20,61 +12,55 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Get more space
-      uses: easimon/maximize-build-space@master
-      with:
-        root-reserve-mb: 30720
-        swap-size-mb: 1024
-        remove-dotnet: true
-        remove-android: true
     - name: Checkout
       uses: actions/checkout@v3
       with:
         repository: armbian/build
+        ref: master
         path: build
     - name: Set env
       shell: bash
       run: |
-        case ${{ inputs.distro }} in
-          debian)
-            echo "release=bullseye" >> $GITHUB_ENV
-            ;;
-          ubuntu)
-            echo "release=jammy" >> $GITHUB_ENV
-            ;;
-          *)
-            echo "Unknown distro!" >&2
-            exit 1
-            ;;
-        esac
-        if [ ${{ inputs.flavor }} == "cli" ]
+        if [ ${{ inputs.flavor }} == "debian" ]
         then
-          echo "build-minimal=yes" >> $GITHUB_ENV
-          echo "build-desktop=no" >> $GITHUB_ENV
-          echo "desktop-environment=" >> $GITHUB_ENV
-          echo "desktop-environment-config-name=" >> $GITHUB_ENV
-        else
+          echo "release=sid" >> $GITHUB_ENV
           echo "build-minimal=no" >> $GITHUB_ENV
           echo "build-desktop=yes" >> $GITHUB_ENV
-          case ${{ inputs.flavor }} in
-            kde)
-              echo "desktop-environment=kde-plasma" >> $GITHUB_ENV
-              ;;
-            *)
-              echo "desktop-environment=${{ inputs.flavor }}" >> $GITHUB_ENV
-              ;;
-          esac
+          echo "desktop-environment=gnome" >> $GITHUB_ENV
           echo "desktop-environment-config-name=config_base" >> $GITHUB_ENV
+          echo "expert=no" >> $GITHUB_ENV
+        elif [ ${{ inputs.flavor }} == "ubuntu" ]
+        then
+          echo "release=jammy" >> $GITHUB_ENV
+          echo "build-minimal=no" >> $GITHUB_ENV
+          echo "build-desktop=yes" >> $GITHUB_ENV
+          echo "desktop-environment=gnome" >> $GITHUB_ENV
+          echo "desktop-environment-config-name=config_base" >> $GITHUB_ENV
+          echo "expert=yes" >> $GITHUB_ENV
+          if [ ${{ inputs.board }} == "rock-5b" ] || [ ${{ inputs.board }} == "station-m3" ]
+          then
+            if [ ${{ inputs.branch }} == "legacy" ]
+            then
+              echo "desktop_appgroups_selected=\"desktop_tools\"" >> $GITHUB_ENV
+            else
+              echo "desktop_appgroups_selected=\"3dsupport browsers chat desktop_tools editors email internet multimedia office programming remote_desktop\"" >> $GITHUB_ENV
+            fi
+          else
+            echo "desktop_appgroups_selected=\"3dsupport browsers chat desktop_tools editors email internet multimedia office programming remote_desktop\"" >> $GITHUB_ENV
+          fi
         fi
     - name: Build
       shell: bash
       run: |
         cd ./build
         touch .ignore_changes
-        sed -i -e 's/-it//g' ./config/templates/config-docker.conf
-        ./compile.sh docker \
+        #mkdir -p ./config/desktop/jammy/appgroups/panfork-mesa/sources/apt/
+        wget https://github.com/chainsx/armbian-rock5b-images/raw/master/panfork/panfork-mesa.gpg -O config/cli/jammy/main/config_desktop/sources/apt/panfork-mesa.gpg
+        wget https://github.com/chainsx/armbian-rock5b-images/raw/master/panfork/panfork-mesa.source -O config/cli/jammy/main/config_desktop/sources/apt/panfork-mesa.source
+        sed -i "s|# CONFIG_SENSORS_PWM_FAN is not set|CONFIG_SENSORS_PWM_FAN=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
+        ./compile.sh \
         BOARD=${{ inputs.board }} \
-        BRANCH=${{ inputs.kernel_branch }} \
+        BRANCH=${{ inputs.branch }} \
         RELEASE=${{ env.release }} \
         BUILD_MINIMAL=${{ env.build-minimal }} \
         BUILD_DESKTOP=${{ env.build-desktop }} \
@@ -82,14 +68,10 @@ runs:
         KERNEL_CONFIGURE=no \
         DESKTOP_ENVIRONMENT=${{ env.desktop-environment }} \
         DESKTOP_ENVIRONMENT_CONFIG_NAME=${{ env.desktop-environment-config-name }} \
-        EXPERT=yes \
+        DESKTOP_APPGROUPS_SELECTED=${{ env.desktop_appgroups_selected }} \
+        EXPERT=${{ env.expert }} \
+        BOARD_FIRMWARE_INSTALL="-full" \
         COMPRESS_OUTPUTIMAGE=sha,gpg,xz
-    - name: Upload artifacts
-      if: inputs.artifacts == 'true'
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ inputs.board }}_${{ inputs.distro }}_${{ inputs.flavor }}
-        path: ./build/output/images/*
     - name: Upload
       if: inputs.release-id != '' && inputs.github-token != ''
       uses: xresloader/upload-to-github-release@v1
@@ -98,6 +80,7 @@ runs:
       with:
         release_id: ${{ inputs.release-id }}
         file: ./build/output/images/*
+        draft: false
     - name: Rollback release
       if: failure() && inputs.release-id != '' && inputs.github-token != ''
       uses: author/action-rollback@stable
@@ -105,3 +88,8 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
         release_id: ${{ inputs.release-id }}
+    - name: Delete cache
+      if: inputs.release-id != '' && inputs.github-token != ''
+      shell: bash
+      run: |
+        sudo rm -rf ./build
