@@ -55,8 +55,8 @@ runs:
         cd ./build
         touch .ignore_changes
         #mkdir -p ./config/desktop/jammy/appgroups/panfork-mesa/sources/apt/
-        wget https://github.com/chainsx/armbian-rock5b-images/raw/master/panfork/panfork-mesa.gpg -O config/cli/jammy/main/config_desktop/sources/apt/panfork-mesa.gpg
-        wget https://github.com/chainsx/armbian-rock5b-images/raw/master/panfork/panfork-mesa.source -O config/cli/jammy/main/config_desktop/sources/apt/panfork-mesa.source
+        wget https://github.com/chainsx/armbian-rock5b/raw/master/panfork/panfork-mesa.gpg -O config/cli/jammy/main/config_desktop/sources/apt/panfork-mesa.gpg
+        wget https://github.com/chainsx/armbian-rock5b/raw/master/panfork/panfork-mesa.source -O config/cli/jammy/main/config_desktop/sources/apt/panfork-mesa.source
         sed -i "s|# CONFIG_SENSORS_PWM_FAN is not set|CONFIG_SENSORS_PWM_FAN=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
         ./compile.sh \
         BOARD=${{ inputs.board }} \
