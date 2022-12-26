@@ -60,7 +60,7 @@ runs:
         sed -i "s|# CONFIG_SENSORS_PWM_FAN is not set|CONFIG_SENSORS_PWM_FAN=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
         wget https://github.com/chainsx/armbian-orangepi5/raw/master/orangepi5.csc -O config/boards/orangepi5.csc
         wget https://github.com/chainsx/armbian-orangepi5/raw/master/rockchip-orangepi5.conf -O config/sources/families/rockchip-orangepi5.conf
-        cp build/config/kernel/linux-rockchip-rk3588-legacy.config config/kernel/linux-rockchip-orangepi5-legacy.config
+        cp config/kernel/linux-rockchip-rk3588-legacy.config config/kernel/linux-rockchip-orangepi5-legacy.config
         ./compile.sh \
         BOARD=${{ inputs.board }} \
         BRANCH=${{ inputs.branch }} \
