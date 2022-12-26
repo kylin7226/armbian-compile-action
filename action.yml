@@ -66,6 +66,7 @@ runs:
         
         rm config/sources/families/media.conf
         wget https://github.com/chainsx/armbian-station-m3/raw/master/media.conf -O config/sources/families/media.conf
+        sed -i "s|CONFIG_RTL8821CU=m|# CONFIG_RTL8821CU is not set|g" config/kernel/linux-rockchip-rk3588-legacy.config
         
         ./compile.sh \
         BOARD=${{ inputs.board }} \
