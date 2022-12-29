@@ -64,8 +64,9 @@ runs:
         wget https://github.com/chainsx/armbian-orangepi5/raw/master/rockchip-orangepi5.conf -O config/sources/families/rockchip-orangepi5.conf
         cp config/kernel/linux-rockchip-rk3588-legacy.config config/kernel/linux-rockchip-orangepi5-legacy.config
         
-        sed -i "s|kernel-5.10|kernel-5.10-next|g" config/sources/families/media.conf
-        #sed -i "s|CONFIG_RTL8821CU=m|# CONFIG_RTL8821CU is not set|g" config/kernel/linux-station-m3-legacy.config
+        rm config/sources/families/media.conf
+        wget https://github.com/chainsx/armbian-station-m3/raw/master/media.conf -O config/sources/families/media.conf
+        #sed -i "s|kernel-5.10|kernel-5.10-next|g" config/sources/families/media.conf
         
         ./compile.sh \
         BOARD=${{ inputs.board }} \
