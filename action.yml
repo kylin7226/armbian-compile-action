@@ -59,10 +59,7 @@ runs:
         wget https://github.com/chainsx/armbian-rock5b/raw/master/panfork/panfork-mesa.source -O config/cli/jammy/main/config_desktop/sources/apt/panfork-mesa.source
         
         sed -i "s|# CONFIG_SENSORS_PWM_FAN is not set|CONFIG_SENSORS_PWM_FAN=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
-        
-        wget https://github.com/chainsx/armbian-orangepi5/raw/master/orangepi5.csc -O config/boards/orangepi5.csc
-        wget https://github.com/chainsx/armbian-orangepi5/raw/master/rockchip-orangepi5.conf -O config/sources/families/rockchip-orangepi5.conf
-        cp config/kernel/linux-rockchip-rk3588-legacy.config config/kernel/linux-rockchip-orangepi5-legacy.config
+
         
         rm config/sources/families/media.conf
         wget https://github.com/chainsx/armbian-station-m3/raw/master/media.conf -O config/sources/families/media.conf
