@@ -37,7 +37,7 @@ runs:
           echo "desktop-environment=gnome" >> $GITHUB_ENV
           echo "desktop-environment-config-name=config_base" >> $GITHUB_ENV
           echo "expert=yes" >> $GITHUB_ENV
-          if [ ${{ inputs.board }} == "rock-5b" ] || [ ${{ inputs.board }} == "station-m3" ] || [ ${{ inputs.board }} == "orangepi5" ]
+          if [ ${{ inputs.board }} == "rock-5b" ] || [ ${{ inputs.board }} == "station-m3" ]
           then
             if [ ${{ inputs.branch }} == "legacy" ]
             then
@@ -66,23 +66,16 @@ runs:
         #sed -i "s|kernel-5.10|kernel-5.10-next|g" config/sources/families/media.conf
         
         if [ ${{ inputs.board }} == "rock-5b" ]
-          then
-            mkdir userpatches
-            touch userpatches/customize-image.sh
-            cat <<-EOF > userpatches/customize-image.sh
-apt-get update && apt-get upgrade -y
-wget https://github.com/pymumu/fan-control-rock5b/releases/download/1.1.0/fan-control-rock5b.1.1.0.arm64.deb
-dpkg -i fan-control-rock5b.1.1.0.arm64.deb
-rm fan-control-rock5b.1.1.0.arm64.deb
-systemctl enable fan-control
-EOF
-          else
-            mkdir userpatches
-            touch userpatches/customize-image.sh
-            cat <<-EOF > userpatches/customize-image.sh
+        then
+          mkdir userpatches
+          wget https://github.com/chainsx/armbian-rock5b/raw/master/userpatches/customize-image.sh -O userpatches/customize-image.sh
+        else
+          mkdir userpatches
+          touch userpatches/customize-image.sh
+          cat <<-EOF > userpatches/customize-image.sh
 apt-get update && apt-get upgrade -y
 EOF
-          fi
+        fi
              
         ./compile.sh \
         BOARD=${{ inputs.board }} \
