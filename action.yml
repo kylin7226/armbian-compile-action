@@ -68,13 +68,12 @@ runs:
         if [ ${{ inputs.board }} == "rock-5b" ]
         then
           mkdir userpatches
-          wget https://github.com/chainsx/armbian-rock5b/raw/master/userpatches/customize-image.sh -O userpatches/customize-image.sh
+          wget https://github.com/chainsx/armbian-rock5b/raw/master/userpatches/customize-image-rock5b.sh -O userpatches/customize-image.sh
         else
           mkdir userpatches
           touch userpatches/customize-image.sh
-          cat <<-EOF > userpatches/customize-image.sh
-apt-get update && apt-get upgrade -y
-EOF
+          mkdir userpatches
+          wget https://github.com/chainsx/armbian-rock5b/raw/master/userpatches/customize-image-panfork.sh -O userpatches/customize-image.sh
         fi
              
         ./compile.sh \
