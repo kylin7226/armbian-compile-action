@@ -59,8 +59,8 @@ runs:
         wget https://github.com/chainsx/armbian-rock5b/raw/master/panfork/panfork-mesa.source -O config/cli/jammy/main/config_desktop/sources/apt/panfork-mesa.source
         
         sed -i "s|# CONFIG_SENSORS_PWM_FAN is not set|CONFIG_SENSORS_PWM_FAN=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
-
-        
+        sed -i "s|ext4|fat|g" config/boards/rock-5b.wip
+       
         rm config/sources/families/media.conf
         wget https://github.com/chainsx/armbian-station-m3/raw/master/media.conf -O config/sources/families/media.conf
         #sed -i "s|kernel-5.10|kernel-5.10-next|g" config/sources/families/media.conf
