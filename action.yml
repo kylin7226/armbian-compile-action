@@ -67,6 +67,7 @@ runs:
         
         if [ ${{ inputs.board }} == "rock-5b" ]
           then
+            mkdir userpatches
             touch userpatches/customize-image.sh
             cat <<-EOF > userpatches/customize-image.sh
 apt-get update && apt-get upgrade -y
@@ -76,6 +77,7 @@ rm fan-control-rock5b.1.1.0.arm64.deb
 systemctl enable fan-control
 EOF
           else
+            mkdir userpatches
             touch userpatches/customize-image.sh
             cat <<-EOF > userpatches/customize-image.sh
 apt-get update && apt-get upgrade -y
