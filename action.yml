@@ -65,6 +65,23 @@ runs:
         wget https://github.com/chainsx/armbian-station-m3/raw/master/media.conf -O config/sources/families/media.conf
         #sed -i "s|kernel-5.10|kernel-5.10-next|g" config/sources/families/media.conf
         
+        if [ ${{ inputs.board }} == "rock-5b" ]
+          then
+            touch userpatches/customize-image.sh
+            cat <<-EOF > userpatches/customize-image.sh
+apt-get update && apt-get upgrade -y
+wget https://github.com/pymumu/fan-control-rock5b/releases/download/1.1.0/fan-control-rock5b.1.1.0.arm64.deb
+dpkg -i fan-control-rock5b.1.1.0.arm64.deb
+rm fan-control-rock5b.1.1.0.arm64.deb
+systemctl enable fan-control
+EOF
+          else
+            touch userpatches/customize-image.sh
+            cat <<-EOF > userpatches/customize-image.sh
+apt-get update && apt-get upgrade -y
+EOF
+          fi
+             
         ./compile.sh \
         BOARD=${{ inputs.board }} \
         BRANCH=${{ inputs.branch }} \
