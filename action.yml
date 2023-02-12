@@ -57,10 +57,6 @@ runs:
         
         sed -i "s|# CONFIG_SENSORS_PWM_FAN is not set|CONFIG_SENSORS_PWM_FAN=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
         sed -i "s|ext4|fat|g" config/boards/rock-5b.wip
-       
-        rm config/sources/families/media.conf
-        wget https://github.com/chainsx/armbian-station-m3/raw/master/media.conf -O config/sources/families/media.conf
-        #sed -i "s|kernel-5.10|kernel-5.10-next|g" config/sources/families/media.conf
         
         if [ ${{ inputs.board }} == "rock-5b" ]; then
           mkdir userpatches
