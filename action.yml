@@ -62,15 +62,14 @@ runs:
         wget https://github.com/chainsx/armbian-station-m3/raw/master/media.conf -O config/sources/families/media.conf
         #sed -i "s|kernel-5.10|kernel-5.10-next|g" config/sources/families/media.conf
         
-        if [ ${{ inputs.board }} == "rock-5b" ]
-        then
+        if [ ${{ inputs.board }} == "rock-5b" ]; then
           mkdir userpatches
-          wget https://github.com/chainsx/armbian-rock5b/raw/master/userpatches/customize-image-rock5b.sh -O userpatches/customize-image.sh
-        else
+          wget https://github.com/chainsx/armbian-rock5b/raw/master/userpatches/customize-image.sh -O userpatches/customize-image.sh
+        fi
+        
+        if [ ${{ inputs.board }} == "station-m3" ]; then
           mkdir userpatches
-          touch userpatches/customize-image.sh
-          mkdir userpatches
-          wget https://github.com/chainsx/armbian-rock5b/raw/master/userpatches/customize-image-panfork.sh -O userpatches/customize-image.sh
+          wget https://github.com/chainsx/armbian-station-m3/raw/master/userpatches/customize-image.sh -O userpatches/customize-image.sh
         fi
              
         ./compile.sh \
