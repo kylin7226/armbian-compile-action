@@ -41,7 +41,7 @@ runs:
           then
             if [ ${{ inputs.branch }} == "legacy" ]
             then
-              echo "desktop_appgroups_selected=\"desktop_tools\"" >> $GITHUB_ENV
+              echo "desktop_appgroups_selected=\"desktop_tools browsers\"" >> $GITHUB_ENV
             else
               echo "desktop_appgroups_selected=\"3dsupport browsers chat desktop_tools editors email internet multimedia office programming remote_desktop\"" >> $GITHUB_ENV
             fi
