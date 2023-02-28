@@ -16,7 +16,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository: armbian/build
-        ref: nightly
+        ref: main
         path: build
     - name: Set env
       shell: bash
