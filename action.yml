@@ -50,16 +50,11 @@ runs:
         
         if [ ${{ inputs.board }} == "rock-5b" ]; then
           mkdir userpatches
-          wget https://github.com/chainsx/armbian-rock5b/raw/master/userpatches/customize-image.sh -O userpatches/customize-image.sh
-        fi
-        
-        if [ ${{ inputs.board }} == "station-m3" ]; then
-          mkdir userpatches
-          wget https://github.com/chainsx/armbian-station-m3/raw/master/userpatches/customize-image.sh -O userpatches/customize-image.sh
+          cp ../userpatches/customize-image.sh userpatches/customize-image.sh
         fi
         
         git status
-        sudo docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
+        docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
              
         ./compile.sh \
         BOARD=${{ inputs.board }} \
