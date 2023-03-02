@@ -58,8 +58,8 @@ runs:
           wget https://github.com/chainsx/armbian-station-m3/raw/master/userpatches/customize-image.sh -O userpatches/customize-image.sh
         fi
         
-        git status
-        docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
+        #git status
+        #docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
              
         ./compile.sh \
         BOARD=${{ inputs.board }} \
