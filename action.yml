@@ -61,7 +61,7 @@ runs:
         git status
         sudo docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
              
-        sudo ./compile.sh \
+        ./compile.sh \
         BOARD=${{ inputs.board }} \
         BRANCH=${{ inputs.branch }} \
         RELEASE=${{ env.release }} \
