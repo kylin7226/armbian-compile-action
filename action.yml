@@ -42,11 +42,8 @@ runs:
         sed -i "s|enable_extension \"grub-riscv64-d1\"|#enable_extension \"grub-riscv64-d1\"|g" config/sources/families/d1.conf
         sed -i "s|#BOOTFS_TYPE=fat|BOOTFS_TYPE=fat|g" config/sources/families/d1.conf
         sed -i "s|#BOOTSIZE=512|BOOTSIZE=512|g" config/sources/families/d1.conf
-        sed -i "s|https://github.com/smaeul/linux|https://github.com/tekkamanninja/linux|g" config/sources/families/d1.conf
-        sed -i "s|riscv/d1-wip|allwinner_nezha_d1_devel|g" config/sources/families/d1.conf
-        
-        rm config/kernel/linux-d1-current.config
-        wget https://github.com/tekkamanninja/linux/raw/allwinner_nezha_d1_devel/arch/riscv/configs/nezha_fedora_defconfig -O config/kernel/linux-d1-current.config
+        sed -i "s|https://github.com/smaeul/linux|https://github.com/torvalds/linux|g" config/sources/families/d1.conf
+        sed -i "s|riscv/d1-wip|master|g" config/sources/families/d1.conf
         
         ./compile.sh \
         BOARD=${{ inputs.board }} \
