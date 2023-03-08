@@ -44,7 +44,7 @@ runs:
       run: |
         cd ./build
         touch .ignore_changes
-        sed -i "s|kernel-5.10|kernel-5.10-next-k|g" config/sources/families/media.conf
+        #sed -i "s|kernel-5.10|kernel-5.10-next-k|g" config/sources/families/media.conf
         
         if [ ${{ inputs.board }} == "station-m3" ]; then
           mkdir userpatches
