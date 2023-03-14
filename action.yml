@@ -47,6 +47,7 @@ runs:
         sed -i "s|https://github.com/150balbes/rockchip-kernel|https://github.com/chainsx/kernel-rk3588|g" config/sources/families/media.conf
         sed -i "s|kernel-5.10|main|g" config/sources/families/media.conf
         sed -i "s|rk3588s-roc-pc.dtb|roc-rk3588s-pc.dtb|g" config/boards/station-m3.conf
+        rm patch/kernel/media-legacy/*
         
         
         if [ ${{ inputs.board }} == "station-m3" ]; then
