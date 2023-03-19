@@ -65,7 +65,6 @@ runs:
         BUILD_MINIMAL=${{ env.build-minimal }} \
         BUILD_DESKTOP=${{ env.build-desktop }} \
         KERNEL_CONFIGURE=no \
-        KERNEL_ONLY=no \
         DESKTOP_ENVIRONMENT=${{ env.desktop-environment }} \
         DESKTOP_ENVIRONMENT_CONFIG_NAME=${{ env.desktop-environment-config-name }} \
         DESKTOP_APPGROUPS_SELECTED=${{ env.desktop_appgroups_selected }} \
