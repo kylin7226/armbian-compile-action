@@ -26,7 +26,7 @@ runs:
           echo "release=sid" >> $GITHUB_ENV
           echo "build-minimal=no" >> $GITHUB_ENV
           echo "build-desktop=yes" >> $GITHUB_ENV
-          echo "desktop-environment=xfce" >> $GITHUB_ENV
+          echo "desktop-environment=gnome" >> $GITHUB_ENV
           echo "desktop-environment-config-name=config_base" >> $GITHUB_ENV
           echo "expert=no" >> $GITHUB_ENV
         elif [ ${{ inputs.flavor }} == "ubuntu" ]
@@ -34,7 +34,7 @@ runs:
           echo "release=jammy" >> $GITHUB_ENV
           echo "build-minimal=no" >> $GITHUB_ENV
           echo "build-desktop=yes" >> $GITHUB_ENV
-          echo "desktop-environment=xfce" >> $GITHUB_ENV
+          echo "desktop-environment=gnome" >> $GITHUB_ENV
           echo "desktop-environment-config-name=config_base" >> $GITHUB_ENV
           echo "expert=yes" >> $GITHUB_ENV
           echo "desktop_appgroups_selected=\"3dsupport desktop_tools browsers\"" >> $GITHUB_ENV
