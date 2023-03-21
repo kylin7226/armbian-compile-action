@@ -51,8 +51,8 @@ runs:
         #echo "" > lib/functions/compilation/patch/drivers_network.sh
         #echo "" > lib/functions/compilation/patch/drivers-harness.sh
         
-        #rm config/kernel/linux-media-legacy.config
-        #wget https://github.com/chainsx/kernel-rk3588/raw/main/arch/arm64/configs/linux-rockchip-rk3588-legacy_defconfig -O config/kernel/linux-media-legacy.config
+        rm config/kernel/linux-media-legacy.config
+        wget https://github.com/chainsx/kernel-rk3588/raw/main/arch/arm64/configs/linux-rockchip-rk3588-legacy_defconfig -O config/kernel/linux-media-legacy.config
         
         #rm patch/kernel/media-legacy/*
         
