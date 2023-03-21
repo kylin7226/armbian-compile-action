@@ -75,7 +75,6 @@ runs:
         DESKTOP_APPGROUPS_SELECTED=${{ env.desktop_appgroups_selected }} \
         EXPERT=${{ env.expert }} \
         BOARD_FIRMWARE_INSTALL="-full" \
-        USE_CCACHE=yes \
         SHARE_LOG=no \
         DEBUG=yes \
         COMPRESS_OUTPUTIMAGE=sha,gpg,xz
