@@ -45,8 +45,8 @@ runs:
         cd ./build
         touch .ignore_changes
         
-        #sed -i "s|# CONFIG_SENSORS_PWM_FAN is not set|CONFIG_SENSORS_PWM_FAN=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
-        #sed -i "s|ext4|fat|g" config/boards/rock-5b.wip
+        sed -i "s|# CONFIG_ATH9K is not set|CONFIG_ATH9K_HW=m\nCONFIG_ATH9K_COMMON=m\nCONFIG_ATH9K_BTCOEX_SUPPORT=y\nCONFIG_ATH9K=m\nCONFIG_ATH9K_PCI=y\nCONFIG_ATH9K_AHB=y\nCONFIG_ATH9K_RFKILL=y\nCONFIG_ATH9K_PCOEM=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
+        sed -i "s|# CONFIG_ATH9K_HTC is not set|CONFIG_ATH9K_HTC=m|g" config/kernel/linux-rockchip-rk3588-legacy.config
         
         if [ ${{ inputs.board }} == "rock-5b" ]; then
           mkdir userpatches
@@ -78,7 +78,7 @@ runs:
           GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
         release_id: ${{ inputs.release-id }}
-        file: ./build/output/images/*
+        file: "./build/output/images/*.img.xz;./build/output/images/*.img.xz.sha;./build/output/debs/linux-*.deb"
         draft: false
     - name: Rollback release
       if: failure() && inputs.release-id != '' && inputs.github-token != ''
