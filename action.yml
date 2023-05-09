@@ -56,6 +56,13 @@ runs:
         KERNEL_CONFIGURE=no \
         EXPERT=${{ env.expert }} \
         COMPRESS_OUTPUTIMAGE=sha,gpg,xz
+        
+    - name: Upload log directory
+      uses: actions/upload-artifact@master
+      with:
+        name: log
+        path: ./build/output/debug/
+        
     - name: Upload
       if: inputs.release-id != '' && inputs.github-token != ''
       uses: xresloader/upload-to-github-release@v1
@@ -72,8 +79,3 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
         release_id: ${{ inputs.release-id }}
-    - name: Upload log directory
-      uses: actions/upload-artifact@master
-      with:
-        name: log
-        path: ./build/output/debug/
