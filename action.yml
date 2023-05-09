@@ -72,8 +72,8 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
         release_id: ${{ inputs.release-id }}
-    - name: Delete cache
-      if: inputs.release-id != '' && inputs.github-token != ''
-      shell: bash
-      run: |
-        sudo rm -rf ./build
+    - name: Upload log directory
+      uses: actions/upload-artifact@master
+      with:
+        name: log
+        path: ./build/output/debug/
