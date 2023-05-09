@@ -65,7 +65,7 @@ runs:
         release_id: ${{ inputs.release-id }}
         file: "./build/output/images/*.img.xz;./build/output/images/*.img.xz.sha;./build/output/debs/linux-*.deb;./build/cache/sources/*.bin"
         draft: false
-         - name: Organize files
+    - name: Organize files
       id: organize
       run: |
         cd ./build/output/debug/
