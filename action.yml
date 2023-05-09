@@ -57,8 +57,15 @@ runs:
         EXPERT=${{ env.expert }} \
         COMPRESS_OUTPUTIMAGE=sha,gpg,xz
         
-    - name: Upload log directory
+     - name: Organize files
+      id: organize
+      run: |
+        cd ./build/output/debug/
+        echo "::set-env name=FIRMWARE::$PWD"
+        echo "::set-output name=status::success"
+    - name: Upload firmware directory
       uses: actions/upload-artifact@master
+      if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: log
         path: ./build/output/debug/
