@@ -56,8 +56,16 @@ runs:
         KERNEL_CONFIGURE=no \
         EXPERT=${{ env.expert }} \
         COMPRESS_OUTPUTIMAGE=sha,gpg,xz
-        
-     - name: Organize files
+    - name: Upload
+      if: inputs.release-id != '' && inputs.github-token != ''
+      uses: xresloader/upload-to-github-release@v1
+      env:
+          GITHUB_TOKEN: ${{ inputs.github-token }}
+      with:
+        release_id: ${{ inputs.release-id }}
+        file: "./build/output/images/*.img.xz;./build/output/images/*.img.xz.sha;./build/output/debs/linux-*.deb;./build/cache/sources/*.bin"
+        draft: false
+         - name: Organize files
       id: organize
       run: |
         cd ./build/output/debug/
@@ -69,16 +77,6 @@ runs:
       with:
         name: log
         path: ./build/output/debug/
-        
-    - name: Upload
-      if: inputs.release-id != '' && inputs.github-token != ''
-      uses: xresloader/upload-to-github-release@v1
-      env:
-          GITHUB_TOKEN: ${{ inputs.github-token }}
-      with:
-        release_id: ${{ inputs.release-id }}
-        file: "./build/output/images/*.img.xz;./build/output/images/*.img.xz.sha;./build/output/debs/linux-*.deb;./build/cache/sources/*.bin"
-        draft: false
     - name: Rollback release
       if: failure() && inputs.release-id != '' && inputs.github-token != ''
       uses: author/action-rollback@stable
