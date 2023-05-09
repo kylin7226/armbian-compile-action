@@ -24,15 +24,15 @@ runs:
         if [ ${{ inputs.flavor }} == "debian" ]
         then
           echo "release=sid" >> $GITHUB_ENV
-          echo "build-minimal=yes" >> $GITHUB_ENV
+          echo "build-minimal=no" >> $GITHUB_ENV
           echo "build-desktop=no" >> $GITHUB_ENV
-          echo "expert=no" >> $GITHUB_ENV
+          echo "expert=yes" >> $GITHUB_ENV
         elif [ ${{ inputs.flavor }} == "ubuntu" ]
         then
           echo "release=jammy" >> $GITHUB_ENV
-          echo "build-minimal=yes" >> $GITHUB_ENV
+          echo "build-minimal=no" >> $GITHUB_ENV
           echo "build-desktop=no" >> $GITHUB_ENV
-          echo "expert=no" >> $GITHUB_ENV
+          echo "expert=yes" >> $GITHUB_ENV
         fi
     - name: Build
       shell: bash
