@@ -45,7 +45,7 @@ runs:
         #mv /opt/riscv64-linux-x86_64-20200528 /opt/riscv64-compiler
         #sed -i "s|riscv64-linux-gnu-|/opt/riscv64-compiler/bin/riscv64-unknown-linux-gnu-|g" config/sources/riscv64.conf
     
-        ./compile.sh docker \
+        ./compile.sh \
         BOARD=${{ inputs.board }} \
         BRANCH=${{ inputs.branch }} \
         RELEASE=${{ env.release }} \
