@@ -44,6 +44,12 @@ runs:
         #tar -xvf /opt/riscv64-gcc.tar.xz -C /opt
         #mv /opt/riscv64-linux-x86_64-20200528 /opt/riscv64-compiler
         #sed -i "s|riscv64-linux-gnu-|/opt/riscv64-compiler/bin/riscv64-unknown-linux-gnu-|g" config/sources/riscv64.conf
+        
+        if [ ${{ inputs.board }} == "licheepi-4a" ]; then
+          mkdir userpatches
+          echo "update-alternatives --set iptables /usr/sbin/iptables-legacy" > userpatches/customize-image.sh
+          echo "update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy" >> userpatches/customize-image.sh
+        fi
     
         ./compile.sh \
         BOARD=${{ inputs.board }} \
