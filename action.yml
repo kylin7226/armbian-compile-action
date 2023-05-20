@@ -35,20 +35,13 @@ runs:
           echo "desktop-environment=xfce" >> $GITHUB_ENV
           echo "desktop-environment-config-name=config_base" >> $GITHUB_ENV
           echo "expert=yes" >> $GITHUB_ENV
-          echo "desktop_appgroups_selected=\"3dsupport desktop_tools\"" >> $GITHUB_ENV
+          echo "desktop_appgroups_selected=\"3d-mesa desktop-tools net-tools shells system-info-tools terminals\"" >> $GITHUB_ENV
         fi
     - name: Build
       shell: bash
       run: |
         cd ./build
         touch .ignore_changes
-        
-        
-        if [ ${{ inputs.board }} == "licheepi-4a" ]; then
-          mkdir userpatches
-          echo "update-alternatives --set iptables /usr/sbin/iptables-legacy" > userpatches/customize-image.sh
-          echo "update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy" >> userpatches/customize-image.sh
-        fi
     
         ./compile.sh \
         BOARD=${{ inputs.board }} \
