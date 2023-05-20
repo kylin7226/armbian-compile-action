@@ -29,10 +29,13 @@ runs:
           echo "expert=yes" >> $GITHUB_ENV
         elif [ ${{ inputs.flavor }} == "ubuntu" ]
         then
-          echo "release=jammy" >> $GITHUB_ENV
+          echo "release=focal" >> $GITHUB_ENV
           echo "build-minimal=no" >> $GITHUB_ENV
-          echo "build-desktop=no" >> $GITHUB_ENV
+          echo "build-desktop=yes" >> $GITHUB_ENV
+          echo "desktop-environment=xfce" >> $GITHUB_ENV
+          echo "desktop-environment-config-name=config_base" >> $GITHUB_ENV
           echo "expert=yes" >> $GITHUB_ENV
+          echo "desktop_appgroups_selected=\"3dsupport desktop_tools\"" >> $GITHUB_ENV
         fi
     - name: Build
       shell: bash
@@ -40,10 +43,6 @@ runs:
         cd ./build
         touch .ignore_changes
         
-        #wget https://github.com/chainsx/armbian-d1-build/releases/download/toolchain/riscv64-linux-x86_64-20200528.tar.xz -O /opt/riscv64-gcc.tar.xz
-        #tar -xvf /opt/riscv64-gcc.tar.xz -C /opt
-        #mv /opt/riscv64-linux-x86_64-20200528 /opt/riscv64-compiler
-        #sed -i "s|riscv64-linux-gnu-|/opt/riscv64-compiler/bin/riscv64-unknown-linux-gnu-|g" config/sources/riscv64.conf
         
         if [ ${{ inputs.board }} == "licheepi-4a" ]; then
           mkdir userpatches
@@ -59,6 +58,9 @@ runs:
         BUILD_DESKTOP=${{ env.build-desktop }} \
         KERNEL_ONLY=no \
         KERNEL_CONFIGURE=no \
+        DESKTOP_ENVIRONMENT=${{ env.desktop-environment }} \
+        DESKTOP_ENVIRONMENT_CONFIG_NAME=${{ env.desktop-environment-config-name }} \
+        DESKTOP_APPGROUPS_SELECTED=${{ env.desktop_appgroups_selected }} \
         EXPERT=${{ env.expert }} \
         COMPRESS_OUTPUTIMAGE=sha,gpg,xz
     - name: Upload
