@@ -29,7 +29,7 @@ runs:
           echo "expert=yes" >> $GITHUB_ENV
         elif [ ${{ inputs.flavor }} == "ubuntu" ]
         then
-          echo "release=jammy" >> $GITHUB_ENV
+          echo "release=focal" >> $GITHUB_ENV
           echo "build-minimal=no" >> $GITHUB_ENV
           echo "build-desktop=yes" >> $GITHUB_ENV
           echo "desktop-environment=xfce" >> $GITHUB_ENV
