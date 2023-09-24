@@ -57,6 +57,7 @@ runs:
         RELEASE=${{ env.release }} \
         BUILD_MINIMAL=${{ env.build-minimal }} \
         BUILD_DESKTOP=${{ env.build-desktop }} \
+        INSTALL_HEADERS=yes \
         KERNEL_ONLY=no \
         KERNEL_CONFIGURE=no \
         EXPERT=${{ env.expert }} \
