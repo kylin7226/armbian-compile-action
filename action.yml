@@ -25,19 +25,14 @@ runs:
         then
           echo "release=sid" >> $GITHUB_ENV
           echo "build-minimal=no" >> $GITHUB_ENV
-          echo "build-desktop=yes" >> $GITHUB_ENV
-          echo "desktop-environment=gnome" >> $GITHUB_ENV
-          echo "desktop-environment-config-name=config_base" >> $GITHUB_ENV
-          echo "expert=no" >> $GITHUB_ENV
+          echo "build-desktop=no" >> $GITHUB_ENV
+          echo "expert=yes" >> $GITHUB_ENV
         elif [ ${{ inputs.flavor }} == "ubuntu" ]
         then
           echo "release=jammy" >> $GITHUB_ENV
           echo "build-minimal=no" >> $GITHUB_ENV
-          echo "build-desktop=yes" >> $GITHUB_ENV
-          echo "desktop-environment=gnome" >> $GITHUB_ENV
-          echo "desktop-environment-config-name=config_base" >> $GITHUB_ENV
+          echo "build-desktop=no" >> $GITHUB_ENV
           echo "expert=yes" >> $GITHUB_ENV
-          echo "desktop_appgroups_selected=\"3dsupport desktop_tools browsers\"" >> $GITHUB_ENV
         fi
     - name: Build
       shell: bash
@@ -45,13 +40,13 @@ runs:
         cd ./build
         touch .ignore_changes
         
-        sed -i "s|# CONFIG_ATH9K is not set|CONFIG_ATH9K_HW=m\nCONFIG_ATH9K_COMMON=m\nCONFIG_ATH9K_BTCOEX_SUPPORT=y\nCONFIG_ATH9K=m\nCONFIG_ATH9K_PCI=y\nCONFIG_ATH9K_AHB=y\nCONFIG_ATH9K_RFKILL=y\nCONFIG_ATH9K_PCOEM=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
-        sed -i "s|# CONFIG_ATH9K_HTC is not set|CONFIG_ATH9K_HTC=m|g" config/kernel/linux-rockchip-rk3588-legacy.config
+        #sed -i "s|# CONFIG_ATH9K is not set|CONFIG_ATH9K_HW=m\nCONFIG_ATH9K_COMMON=m\nCONFIG_ATH9K_BTCOEX_SUPPORT=y\nCONFIG_ATH9K=m\nCONFIG_ATH9K_PCI=y\nCONFIG_ATH9K_AHB=y\nCONFIG_ATH9K_RFKILL=y\nCONFIG_ATH9K_PCOEM=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
+        #sed -i "s|# CONFIG_ATH9K_HTC is not set|CONFIG_ATH9K_HTC=m|g" config/kernel/linux-rockchip-rk3588-legacy.config
         
-        if [ ${{ inputs.board }} == "rock-5b" ]; then
-          mkdir userpatches
-          cp ../userpatches/customize-image.sh userpatches/customize-image.sh
-        fi
+        #if [ ${{ inputs.board }} == "rock-5b" ]; then
+        #  mkdir userpatches
+        #  cp ../userpatches/customize-image.sh userpatches/customize-image.sh
+        #fi
         
         git status
         docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
@@ -63,11 +58,7 @@ runs:
         BUILD_MINIMAL=${{ env.build-minimal }} \
         BUILD_DESKTOP=${{ env.build-desktop }} \
         KERNEL_CONFIGURE=no \
-        DESKTOP_ENVIRONMENT=${{ env.desktop-environment }} \
-        DESKTOP_ENVIRONMENT_CONFIG_NAME=${{ env.desktop-environment-config-name }} \
-        DESKTOP_APPGROUPS_SELECTED=${{ env.desktop_appgroups_selected }} \
         EXPERT=${{ env.expert }} \
-        BOARD_FIRMWARE_INSTALL="-full" \
         SHARE_LOG=yes \
         DEBUG=yes \
         COMPRESS_OUTPUTIMAGE=sha,gpg,xz
