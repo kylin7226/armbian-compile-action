@@ -37,13 +37,17 @@ runs:
     - name: Build
       shell: bash
       run: |
+      
+        wget Xuantie-900-gcc-linux-5.10.4-glibc-x86_64-V2.6.1-20220906.tar.gz
+        sudo tar -zxvf Xuantie-900-gcc-linux-5.10.4-glibc-x86_64-V2.6.1-20220906.tar.gz -C /opt
+        sudo mv /opt/Xuantie-900-gcc-linux-5.10.4-glibc-x86_64-V2.6.1 /opt/riscv-gcc
+
         cd ./build
         touch .ignore_changes
         
-        #sed -i "s|# CONFIG_ATH9K is not set|CONFIG_ATH9K_HW=m\nCONFIG_ATH9K_COMMON=m\nCONFIG_ATH9K_BTCOEX_SUPPORT=y\nCONFIG_ATH9K=m\nCONFIG_ATH9K_PCI=y\nCONFIG_ATH9K_AHB=y\nCONFIG_ATH9K_RFKILL=y\nCONFIG_ATH9K_PCOEM=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
-        #sed -i "s|# CONFIG_ATH9K_HTC is not set|CONFIG_ATH9K_HTC=m|g" config/kernel/linux-rockchip-rk3588-legacy.config
+        sed -i "s|riscv64-linux-gnu-|/opt/riscv-gcc/bin/riscv64-unknown-linux-gnu-|g" config/sources/riscv64.conf
         
-        #if [ ${{ inputs.board }} == "rock-5b" ]; then
+        #if [ ${{ inputs.board }} == "licheepi-4a" ]; then
         #  mkdir userpatches
         #  cp ../userpatches/customize-image.sh userpatches/customize-image.sh
         #fi
