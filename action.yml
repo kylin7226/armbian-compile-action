@@ -38,7 +38,7 @@ runs:
       shell: bash
       run: |
       
-        wget Xuantie-900-gcc-linux-5.10.4-glibc-x86_64-V2.6.1-20220906.tar.gz
+        wget https://github.com/chainsx/armbian-riscv-build/releases/download/toolchain/Xuantie-900-gcc-linux-5.10.4-glibc-x86_64-V2.6.1-20220906.tar.gz
         sudo tar -zxvf Xuantie-900-gcc-linux-5.10.4-glibc-x86_64-V2.6.1-20220906.tar.gz -C /opt
         sudo mv /opt/Xuantie-900-gcc-linux-5.10.4-glibc-x86_64-V2.6.1 /opt/riscv-gcc
 
