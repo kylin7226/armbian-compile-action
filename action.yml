@@ -47,10 +47,10 @@ runs:
         
         sed -i "s|riscv64-linux-gnu-|/opt/riscv-gcc/bin/riscv64-unknown-linux-gnu-|g" config/sources/riscv64.conf
         
-        #if [ ${{ inputs.board }} == "licheepi-4a" ]; then
-        #  mkdir userpatches
-        #  cp ../userpatches/customize-image.sh userpatches/customize-image.sh
-        #fi
+        if [ ${{ inputs.branch }} == "edge" ]; then
+          sed -i "s|branch:th1520-v6.6-rc5|branch:th1520-v6.6|g" config/sources/families/thead.conf
+          sed -i "s|# CONFIG_RTW88_8723DS is not set|CONFIG_RTW88_8723DS=m|g" config/kernel/linux-thead-edge.config
+        fi
         
         git status
         docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
