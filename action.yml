@@ -40,8 +40,10 @@ runs:
         cd ./build
         touch .ignore_changes
         
-        #sed -i "s|# CONFIG_ATH9K is not set|CONFIG_ATH9K_HW=m\nCONFIG_ATH9K_COMMON=m\nCONFIG_ATH9K_BTCOEX_SUPPORT=y\nCONFIG_ATH9K=m\nCONFIG_ATH9K_PCI=y\nCONFIG_ATH9K_AHB=y\nCONFIG_ATH9K_RFKILL=y\nCONFIG_ATH9K_PCOEM=y|g" config/kernel/linux-rockchip-rk3588-legacy.config
-        #sed -i "s|# CONFIG_ATH9K_HTC is not set|CONFIG_ATH9K_HTC=m|g" config/kernel/linux-rockchip-rk3588-legacy.config
+        sed -i "s|https://github.com/150balbes/rockchip-kernel|https://gitlab.com/firefly-linux/kernel|g" config/sources/families/media.conf
+        sed -i "s|kernel-5.10|rk3399/firefly-4.19|g" config/sources/families/media.conf
+        sed -i "s|5.10|4.19|g" config/sources/families/media.conf
+        sed -i "s|rk3399-firefly.dtb|rk3399-firefly-linux.dtb|g" config/boards/firefly-rk3399.conf
         
         #if [ ${{ inputs.board }} == "rock-5b" ]; then
         #  mkdir userpatches
