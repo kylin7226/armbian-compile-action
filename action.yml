@@ -70,7 +70,7 @@ runs:
           GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
         release_id: ${{ inputs.release-id }}
-        file: "./build/output/images/*.img.xz;./build/output/images/*.img.xz.sha;./build/output/debs/linux-*.deb"
+        file: "./build/output/images/*.img.xz;./build/output/images/*.img.xz.sha;./build/output/debs/linux-*.deb;./build/output/configs/*"
         draft: false
     - name: Rollback release
       if: failure() && inputs.release-id != '' && inputs.github-token != ''
