@@ -15,7 +15,7 @@ runs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        repository: armbian/build
+        repository: chainsx/build
         ref: main
         path: build
     - name: Set env
@@ -41,13 +41,13 @@ runs:
         cd ./build
         touch .ignore_changes
         
-        if [ ${{ inputs.branch }} == "edge" ]; then
-          sed -i "s|tag:th1520-v6.7-rc1|branch:th1520-v6.7-rc3|g" config/sources/families/thead.conf
-          echo 'CONFIG_RISV_THEAD_LIGHT_CPUFREQ=y' >> config/kernel/linux-thead-edge.config
-          echo 'CONFIG_LIGHT_AON_PD=y' >> config/kernel/linux-thead-edge.config
-          echo 'CONFIG_CLK_LIGHT_FM=y' >> config/kernel/linux-thead-edge.config
+        #if [ ${{ inputs.branch }} == "edge" ]; then
+        #  sed -i "s|tag:th1520-v6.7-rc1|branch:th1520-v6.7-rc3|g" config/sources/families/thead.conf
+        #  echo 'CONFIG_RISV_THEAD_LIGHT_CPUFREQ=y' >> config/kernel/linux-thead-edge.config
+        #  echo 'CONFIG_LIGHT_AON_PD=y' >> config/kernel/linux-thead-edge.config
+        #  echo 'CONFIG_CLK_LIGHT_FM=y' >> config/kernel/linux-thead-edge.config
         #  sed -i "s|# CONFIG_RTW88_8723DS is not set|CONFIG_RTW88_8723DS=m|g" config/kernel/linux-thead-edge.config
-        fi
+        #fi
         
         git status
         docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
@@ -70,7 +70,7 @@ runs:
           GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
         release_id: ${{ inputs.release-id }}
-        file: "./build/output/images/*.img.xz;./build/output/images/*.img.xz.sha;./build/output/debs/linux-*.deb;./build/output/configs/*"
+        file: "./build/output/images/*.img.xz;./build/output/images/*.img.xz.sha;./build/output/debs/linux-*.deb;./build/output/config/*"
         draft: false
     - name: Rollback release
       if: failure() && inputs.release-id != '' && inputs.github-token != ''
