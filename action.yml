@@ -15,7 +15,7 @@ runs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        repository: armbian/build
+        repository: chainsx/armbian-phytiumpi
         ref: main
         path: build
     - name: Set env
