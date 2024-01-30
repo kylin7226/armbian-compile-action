@@ -56,8 +56,8 @@ runs:
           cp ../userpatches/customize-image.sh userpatches/customize-image.sh
         fi
         
-        #git status
-        #docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
+        git status
+        docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
              
         ./compile.sh \
         BOARD=${{ inputs.board }} \
