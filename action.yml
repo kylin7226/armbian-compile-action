@@ -44,7 +44,7 @@ runs:
       run: |
         cd ./build
         touch .ignore_changes
-        sed -i "s|https://github.com/150balbes/rockchip-kernel|https://github.com/armbian/linux-rockchip|g" config/sources/families/media.conf
+        sed -i "s|https://github.com/150balbes/rockchip-kernel|https://github.com/chainsx/linux-rockchip|g" config/sources/families/media.conf
         sed -i "s|commit:9db2691ddfbdc7013d507df665f3e038eea7bf93|branch:rk-5.10-rkr6|g" config/sources/families/media.conf
         sed -i "s|rk3588s-roc-pc.dtb|rk3588s-roc-rk3588s-pc-v12.dtb|g" config/boards/station-m3.csc
         sed -i "s|# CONFIG_RTL8821CU is not set|CONFIG_RTL8821CU=y|g" config/kernel/linux-media-legacy.config
