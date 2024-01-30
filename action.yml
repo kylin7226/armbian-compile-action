@@ -48,6 +48,8 @@ runs:
         sed -i "s|commit:9db2691ddfbdc7013d507df665f3e038eea7bf93|branch:rk-5.10-rkr6|g" config/sources/families/media.conf
         sed -i "s|rk3588s-roc-pc.dtb|rk3588s-roc-rk3588s-pc-v12.dtb|g" config/boards/station-m3.csc
         sed -i "s|# CONFIG_RTL8821CU is not set|CONFIG_RTL8821CU=y|g" config/kernel/linux-media-legacy.config
+        sed -i "s|CONFIG_THERMAL_DEFAULT_GOV_POWER_ALLOCATOR=y|# CONFIG_THERMAL_DEFAULT_GOV_POWER_ALLOCATOR is not set|g" config/kernel/linux-media-legacy.config
+        sed -i "s|# CONFIG_THERMAL_DEFAULT_GOV_STEP_WISE is not set|CONFIG_THERMAL_DEFAULT_GOV_STEP_WISE=y|g" config/kernel/linux-media-legacy.config
         
         if [ ${{ inputs.board }} == "station-m3" ]; then
           mkdir userpatches
