@@ -41,13 +41,13 @@ runs:
         cd ./build
         touch .ignore_changes
         
-        if [ ${{ inputs.branch }} == "edge" ]; then
-          sed -i "s|tag:th1520-v6.7-rc8|branch:th1520-master|g" config/sources/families/thead.conf
-        fi
+        #if [ ${{ inputs.branch }} == "edge" ]; then
+        #  sed -i "s|tag:th1520-v6.7-rc8|branch:th1520-master|g" config/sources/families/thead.conf
+        #fi
 
-        if [ ${{ inputs.branch }} == "current" ]; then
-          sed -i "s|tag:th1520-v6.6.8|branch:th1520-lts|g" config/sources/families/thead.conf
-        fi
+        #if [ ${{ inputs.branch }} == "current" ]; then
+        #  sed -i "s|tag:th1520-v6.6.8|branch:th1520-lts|g" config/sources/families/thead.conf
+        #fi
         
         git status
         docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
