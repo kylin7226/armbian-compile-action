@@ -15,7 +15,7 @@ runs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        repository: armbian/build
+        repository: chainsx/armbian-cyber-aib
         ref: main
         path: build
     - name: Set env
@@ -44,16 +44,10 @@ runs:
       run: |
         cd ./build
         touch .ignore_changes
-        #sed -i "s|https://github.com/150balbes/rockchip-kernel|https://github.com/chainsx/linux-rockchip|g" config/sources/families/media.conf
-        #sed -i "s|commit:9db2691ddfbdc7013d507df665f3e038eea7bf93|branch:rk-5.10-rkr6|g" config/sources/families/media.conf
-        #sed -i "s|rk3588s-roc-pc.dtb|rk3588s-roc-rk3588s-pc-v12.dtb|g" config/boards/station-m3.csc
-        #sed -i "s|# CONFIG_RTL8821CU is not set|CONFIG_RTL8821CU=y|g" config/kernel/linux-media-legacy.config
-        #sed -i "s|CONFIG_THERMAL_DEFAULT_GOV_POWER_ALLOCATOR=y|# CONFIG_THERMAL_DEFAULT_GOV_POWER_ALLOCATOR is not set|g" config/kernel/linux-media-legacy.config
-        #sed -i "s|# CONFIG_THERMAL_DEFAULT_GOV_STEP_WISE is not set|CONFIG_THERMAL_DEFAULT_GOV_STEP_WISE=y|g" config/kernel/linux-media-legacy.config
-        
-        if [ ${{ inputs.board }} == "station-m3" ]; then
+    
+        if [ ${{ inputs.board }} == "cyber-aib" ]; then
           mkdir userpatches
-          cp ../userpatches/customize-image.sh userpatches/customize-image.sh
+          wget https://github.com/chainsx/image-armbian/raw/master/userpatches/customize-image.sh -O userpatches/customize-image.sh
         fi
         
         git status
