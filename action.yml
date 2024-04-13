@@ -15,7 +15,7 @@ runs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        repository: chainsx/armbian-lm4b
+        repository: chainsx/armbian-t527
         ref: main
         path: build
     - name: Set env
