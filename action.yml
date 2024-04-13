@@ -15,7 +15,7 @@ runs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        repository: chainsx/armbian-lm4b
+        repository: chainsx/armbian-t527
         ref: main
         path: build
     - name: Set env
@@ -30,9 +30,12 @@ runs:
         elif [ ${{ inputs.flavor }} == "ubuntu" ]
         then
           echo "release=jammy" >> $GITHUB_ENV
-          echo "build-minimal=yes" >> $GITHUB_ENV
-          echo "build-desktop=no" >> $GITHUB_ENV
+          echo "build-minimal=no" >> $GITHUB_ENV
+          echo "build-desktop=yes" >> $GITHUB_ENV
+          echo "desktop-environment=gnome" >> $GITHUB_ENV
+          echo "desktop-environment-config-name=config_base" >> $GITHUB_ENV
           echo "expert=yes" >> $GITHUB_ENV
+          echo "desktop_appgroups_selected=\"3d-mesa desktop-tools net-tools shells system-info-tools terminals\"" >> $GITHUB_ENV
         fi
     - name: Build
       shell: bash
