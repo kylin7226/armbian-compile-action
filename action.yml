@@ -42,6 +42,9 @@ runs:
         
         git status
         docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
+
+        sudo apt update
+        sudo apt install ubuntu-keyring
              
         ./compile.sh \
         BOARD=${{ inputs.board }} \
