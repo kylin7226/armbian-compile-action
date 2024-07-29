@@ -24,13 +24,13 @@ runs:
         if [ ${{ inputs.flavor }} == "debian" ]
         then
           echo "release=sid" >> $GITHUB_ENV
-          echo "build-minimal=no" >> $GITHUB_ENV
+          echo "build-minimal=yes" >> $GITHUB_ENV
           echo "build-desktop=no" >> $GITHUB_ENV
           echo "expert=no" >> $GITHUB_ENV
         elif [ ${{ inputs.flavor }} == "ubuntu" ]
         then
           echo "release=jammy" >> $GITHUB_ENV
-          echo "build-minimal=no" >> $GITHUB_ENV
+          echo "build-minimal=yes" >> $GITHUB_ENV
           echo "build-desktop=no" >> $GITHUB_ENV
           echo "expert=yes" >> $GITHUB_ENV
         fi
@@ -51,6 +51,7 @@ runs:
         BUILD_DESKTOP=${{ env.build-desktop }} \
         KERNEL_CONFIGURE=no \
         EXPERT=${{ env.expert }} \
+        BOARD_FIRMWARE_INSTALL="-full" \
         SHARE_LOG=no \
         DEBUG=yes \
         COMPRESS_OUTPUTIMAGE=sha,gpg,xz
