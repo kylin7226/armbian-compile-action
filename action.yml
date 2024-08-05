@@ -41,9 +41,9 @@ runs:
         touch .ignore_changes
         
         git status
-        docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
+        #docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
              
-        ./compile.sh \
+        sudo ./compile.sh \
         BOARD=${{ inputs.board }} \
         BRANCH=${{ inputs.branch }} \
         RELEASE=${{ env.release }} \
@@ -51,6 +51,7 @@ runs:
         BUILD_DESKTOP=${{ env.build-desktop }} \
         KERNEL_CONFIGURE=no \
         EXPERT=${{ env.expert }} \
+        USE_CCACHE=yes \
         SHARE_LOG=no \
         DEBUG=yes \
         COMPRESS_OUTPUTIMAGE=sha,gpg,xz
