@@ -42,35 +42,6 @@ runs:
     - name: Build
       shell: bash
       run: |
-        set +e
-        docker rmi `docker images -q`
-        [[ -n "${AGENT_TOOLSDIRECTORY}" ]] && sudo rm -rf "${AGENT_TOOLSDIRECTORY}"
-        sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d /usr/local/lib/android 2>/dev/null
-        sudo -E apt-get -y update
-        sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
-        sudo -E systemctl daemon-reload
-        echo "Deleting files, please wait ..."
-        sudo rm -rf \
-          /usr/share/dotnet \
-          /etc/mysql \
-          /etc/php \
-          /opt/*
-        sudo -E apt-get -y purge \
-          azure-cli \
-          ghc* \
-          zulu* \
-          hhvm \
-          llvm* \
-          firefox \
-          google* \
-          dotnet* \
-          powershell \
-          openjdk* \
-          mysql* \
-          php*
-        sudo -E apt-get update
-
-        
         cd ./build
         touch .ignore_changes
     
@@ -80,9 +51,9 @@ runs:
         fi
         
         git status
-        docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
+        #docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
              
-        ./compile.sh \
+        sudo ./compile.sh \
         BOARD=${{ inputs.board }} \
         BRANCH=${{ inputs.branch }} \
         RELEASE=${{ env.release }} \
@@ -94,6 +65,7 @@ runs:
         DESKTOP_APPGROUPS_SELECTED=${{ env.desktop_appgroups_selected }} \
         EXPERT=${{ env.expert }} \
         BOARD_FIRMWARE_INSTALL="-full" \
+        USE_CCACHE=yes \
         SHARE_LOG=no \
         DEBUG=yes \
         COMPRESS_OUTPUTIMAGE=sha,gpg,xz
