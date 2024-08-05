@@ -41,9 +41,9 @@ runs:
         touch .ignore_changes
         
         git status
-        docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
+        #docker pull ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-jammy-latest
              
-        ./compile.sh \
+        sudo ./compile.sh \
         BOARD=${{ inputs.board }} \
         BRANCH=${{ inputs.branch }} \
         RELEASE=${{ env.release }} \
@@ -53,6 +53,7 @@ runs:
         EXPERT=${{ env.expert }} \
         BOARD_FIRMWARE_INSTALL="-full" \
         SHARE_LOG=no \
+        USE_CCACHE=yes \
         DEBUG=yes \
         COMPRESS_OUTPUTIMAGE=sha,gpg,xz
     - name: Upload
