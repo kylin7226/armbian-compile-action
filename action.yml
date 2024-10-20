@@ -15,7 +15,7 @@ runs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        repository: chainsx/armbian-cyber-aib
+        repository: kylin7226/armbian-cyber-aib
         ref: main
         path: build
     - name: Set env
